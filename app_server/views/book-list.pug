@@ -1,0 +1,22 @@
+extends layout
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.banner
+    .col-12
+      h1= pageHeader.title
+        small &nbsp; #{pageHeader.strapline}
+
+  .row
+    .col-12
+      each book in books
+        .card
+          .card-block
+            h4 
+              a(href=`/book/${book._id}`)= book.name
+              +outputRating(book.rating)
+            p.copies= book.copies
+
+
+
+              
