@@ -3,6 +3,12 @@ const apiOptions = {
   server: 'http://localhost:3000'
 };
 
+const formatCopies = (copies) => {
+  let thisCopies = 0;
+  let unit = 'copies';
+  thisCopies = copies;
+  return thisCopies + unit
+};
 
 
 const showError = (req, res, status) => {
@@ -52,7 +58,6 @@ const homelist = (req, res) => {
     url: `${apiOptions.server}${path}`,
     method: 'GET',
     json: {},
-
   };
   request(
     requestOptions,
@@ -60,6 +65,7 @@ const homelist = (req, res) => {
       let data = [];
       if (statusCode === 200 && body.length) {
         data = body.map( (item) => {
+          item.copies = formatCopies(item.copies);
           return item;
         });
       }
@@ -67,6 +73,8 @@ const homelist = (req, res) => {
     }
   );
 };
+
+
 
 const renderDetailPage = (req, res, book) => {
   res.render('book-info',
